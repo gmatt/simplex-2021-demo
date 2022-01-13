@@ -1,16 +1,53 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.poe.tasks]
+run = "streamlit run --server.runOnSave true --server.folderWatchBlacklist \"./temp_code.py\" --server.headless true streamlit_app.py"
+
 [tool.poetry]
+authors = ["Matt Sárdi <sardi.matt@gmail.com>"]
+description = ""
 name = "simplex-2021-demo"
 version = "0.1.0"
-description = ""
-authors = ["Matt Sárdi <sardi.matt@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+Bottleneck = "1.3.2"
+captum = "0.4.0"
+certifi = "2021.10.8"
+cycler = "0.10.0"
+data = "0.4"
+decorator = "5.1.0"
+fonttools = "4.25.0"
+funcsigs = "1.0.2"
+future = "0.18.2"
+latex = "0.7.0"
+munkres = "1.1.4"
+openTSNE = "^0.6.1"
+pandas = "^1.3.3"
+patsy = "0.5.2"
+pyprojroot = "^0.2.0"
+python = ">=3.8,<3.10"
+pytorch-influence-functions = "0.1.1"
+pytz = "2021.3"
+scikit-learn = "^0.24.2"
+scipy = "^1.7.1"
+seaborn = "0.11.2"
+shutilwhich = "1.1.0"
+sip = "^6.5.0"
+statsmodels = "0.12.2"
 streamlit = "^1.3.1"
+streamlit-ace = "^0.1.1"
+streamlit-plotly-events = "^0.0.6"
+tempdir = "0.7.1"
+torch = "^1.10.1"
+torchaudio = "^0.10.1"
+torchvision = "^0.11.2"
+umap-learn = "^0.5.2"
+matplotlib = "^3.5.1"
+cffi = "1.14.6"
 
 [tool.poetry.dev-dependencies]
+poethepoet = "^0.11.0"
 pytest = "^5.2"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+watchdog = "^2.1.6"
