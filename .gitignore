@@ -128,4 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-/simplex_2021_demo/temp_code.py
+/.idea
