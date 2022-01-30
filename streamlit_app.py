@@ -47,19 +47,47 @@ if __name__ == "__main__":
     default_data_code = (example_models_dir / example_model / "data.py").read_text()
 
     with st.expander("ℹ️ Info", expanded=True):
-        st.markdown(
-            # language=md
-            """
-SimplEx is an explainable AI (XAI) method that uses similar examples as explanation.
+        # language=md
+        """
+        SimplEx is an explainable AI (XAI) method that explains predictions with similar examples (e.g. this example is
+        80% like this and 20% like that corpus example) and also provides individual feature importances for each
+        example.
 
-This demo lets you experiment with it.
+        See the paper: [📄 Explaining Latent Representations with a Corpus of Examples](https://arxiv.org/abs/2110.15355)
 
-See the paper:  
-[📄 Explaining Latent Representations with a Corpus of Examples](https://arxiv.org/abs/2110.15355)
+        This web app lets you experiment with the method with toy examples or real models.
 
-Close this info with the `➖` in the top right corner of this box.
-"""
-        )
+        Choose an example from the sidebar. (If the sidebar is not visible, you can summon it with the arrow in the top
+        left corner.)
+        Click on the chart or enter a corpus index to create an explanation for a specific example.
+        You should see percentages at the bottom, and 3 examples (the explanation) highlighted on the chart. The chart
+        shows the same examples in input space and latent space (the latter being the output of the penultimate layer of
+        the model).
+        Hover should be in sync between the input and latent space charts. The black lines are the paths of the
+        integrated Jacobians (along which the feature contributions are calculated). Different dimensionality reduction
+        methods (to visualize in 2D) can be chosen in "visualization settings".
+
+        **Using a custom model**
+
+        Enter the code for the model. Arbitrary Python code can be entered into the text field, and the code runs
+        immediately. Currently, the app works with PyTorch models, which should be differentiable (they usually are) and
+        have a `latent_representation()` method. (This is described in the
+        [BlackBox interface](https://github.com/JonathanCrabbe/Simplex/blob/787f01a83783835137819110a309b46dc66418db/models/base.py).)
+        Basically, in the simplest case, take any existing PyTorch model, including training code, copy the `forward()`
+        method into a new `latent_representation()` method, wherein remove the last step (the last layer) before the
+        return.
+        You can provide the corpus (which is used to draw explanations from) to the second text field below the first
+        one. This can be the training set, or can be different. The variables you need to define are `model`, an
+        instance with BlackBox interface as described above, and a corpus `X`, a Numpy array.
+        You can optionally define the labels `y`, a Numpy array, `feature_names`, list of strings, and `input_baseline`,
+        a Numpy array.
+        Streamlit caches states, and it won’t perform the same calculation twice, it just uses the cached results. If
+        you’re getting unexpected results, it might be due to a caching issue, press `C` to clear cache and `R` to
+        reload the app.
+
+        GitHub: https://github.com/gmatt/simplex-2021-demo
+
+        Close this info with the `➖` in the top right corner of this box."""
 
     st.write("Enter model code:")
     st.caption(
