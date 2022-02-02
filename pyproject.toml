@@ -14,6 +14,7 @@ version = "0.1.0"
 
 [tool.poetry.dependencies]
 Simplex = {git = "https://github.com/gmatt/Simplex.git", rev="eb7436d6d90b02eb875d2bb6952ccc754b221e34"}
+cffi = "1.15.0"
 matplotlib = "^3.5.1"
 openTSNE = "^0.6.1"
 pandas = "^1.3.3"
