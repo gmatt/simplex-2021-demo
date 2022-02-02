@@ -3,11 +3,11 @@ from typing import Dict
 import numpy as np
 import streamlit as st
 from pyprojroot import here
-from streamlit_ace import st_ace
 
 from simplex_2021_demo.main_logic.dimensionality_reduction import fit_dim_reducer
 from simplex_2021_demo.main_logic.get_latent_representation import get_latents
 from simplex_2021_demo.main_logic.simplex import simplex
+from simplex_2021_demo.ui.code_input import code_input
 from simplex_2021_demo.ui.dimensionality_reduction_menu import select_dim_reduction
 from simplex_2021_demo.ui.validate_variables import validate_variables
 from simplex_2021_demo.util.execute_python import run_code_and_get_variables
@@ -87,15 +87,16 @@ if __name__ == "__main__":
 
         GitHub: https://github.com/gmatt/simplex-2021-demo
 
-        Close this info with the `➖` in the top right corner of this box."""
+        There seems to be an issue with the code editor, it doesn't load in some browsers. If so, please toggle the
+        following checkbox:"""
+        use_ace = st.checkbox("use Ace code editor", value=True)
+        "Close this info with the `➖` in the top right corner of this box."
 
     st.write("Enter model code:")
     st.caption(
         "Feel free to enter training code, it will only run once (unless things go wrong, then blame it on Streamlit)."
     )
-    model_code = st_ace(
-        value=default_model_code, language="python", auto_update=True, font_size=12
-    )
+    model_code = code_input(value=default_model_code, use_ace_editor=use_ace)
     variables = train_model(code=model_code)
 
     st.write("Enter data (corpus):")
@@ -103,9 +104,7 @@ if __name__ == "__main__":
         "Variables `X` (corpus), `model`, and probably `y` (labels) should exist. You can use variables from the "
         "previous block."
     )
-    data_code = st_ace(
-        value=default_data_code, language="python", auto_update=True, font_size=12
-    )
+    data_code = code_input(value=default_data_code, use_ace_editor=use_ace)
     variables = get_corpus(code=data_code, local_variables=variables)
 
     validate_variables(
